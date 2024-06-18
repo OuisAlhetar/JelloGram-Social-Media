@@ -1,0 +1,59 @@
+
+
+
+@import '../variables/color';
+
+// this is the header styling using SASS
+
+.footer {
+    & .container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        width: 70%;
+        min-width: 500px;
+        height: auto;
+        margin: 0 auto;
+        border-radius: 2px;
+        box-shadow: 0 2px 12px #8f8f8f;
+        background-color: #4e4e4e;
+        color: white;
+        font-size: 1rem;
+
+        & p{
+            width: 100%;
+            margin: 10px 5px;
+            text-align: center;
+        }
+        & nav{
+            width: 100%;
+            background-color: #f6f2f2;
+            padding-bottom: 5px;
+            & ul{
+                @include restList;
+                width: 100%;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+    
+                & li a{
+                    color: black;
+                    text-decoration: none;
+                    font-size: .7rem;
+                    margin: 15px ;
+                    padding: 5px;
+
+                    &:hover{
+                        background-color: #8f8f8f;
+                        color: #f6f2f2;
+                    }
+                    
+                }
+            }
+        }
+        
+        
+
+    }
+}

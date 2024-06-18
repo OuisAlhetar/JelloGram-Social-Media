@@ -1,0 +1,98 @@
+@import '../variables/color';
+@import '../variables/fonts';
+@import '../mixins/mixins';
+
+// this is the header styling using SASS
+
+.header{
+    font-family: $base-font;
+    display: flex;
+    justify-content: space-between;
+    background-color: #f9f6f6;
+    width: 70%;
+    min-width: 500px;
+    height: 60px;
+    padding: 0 5px;
+    margin: 0 auto;
+    border-radius: 2px;
+    box-shadow: 0 2px 12px #8f8f8f;
+    border: {
+        top: none;
+        // left: 1px solid rgb(240, 237, 237);
+        // bottom: 1px solid black;
+        // right: 1px solid black;
+    };
+
+
+    & .logo{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+
+    & .logo h1{
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 0 5px ;
+        margin: 0 5px;
+
+        & a{
+            text-decoration: none;
+            color: black;
+        }
+    }
+    & .logo h3 a{
+        color: black;
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0 3px ;
+        margin: 0 5px;
+        text-decoration: none;
+        transition: .3s ease-out border ;
+        transition: .2s ease-out font-size ;
+        &:hover{
+            color: black;
+            font-size: 1.1rem;
+            border-bottom: 3px solid $button-color;
+
+        }
+    }
+    
+    & #account-info{
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        font-family: $base-font;
+
+        & img{
+            @include circle(35px);
+            margin: 2px;
+        }
+    }
+
+    & .login-register{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        // flex-wrap: wrap;
+    }
+
+    & .login-register div{
+        background-color: $button-color;
+        color: white;
+        padding: 8px 12px;
+        margin: 0 5px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: .4s ease-in-out transform;
+        outline: none;
+
+        &:hover{
+            background-color: rgb(37, 35, 35);
+            transform: scale(1.018);
+        }
+    }
+
+    margin-bottom: 30px;
+    
+}

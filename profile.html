@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Styling Files -->
+    <link rel="stylesheet" href="./views/main.css">
+    <!-- axios importing -->
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <title>JelloGram</title>
+
+    <!-- External font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo+Play:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Poppins Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- google icons -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .profile-card {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 25px;
+            background-color: rgb(249, 246, 246);
+
+            margin-bottom: 40px;
+        }
+
+        .profile-user-img {
+            border: none;
+            outline: none;
+            width: 20%;
+            margin-right: 0;
+        }
+
+        .profile-user-img img {
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            border: 1px solid black;
+        }
+
+        .profile-user-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30%;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .profile-user-info div {
+            margin: 5px 0;
+        }
+
+
+        .count-posts-comments div {
+            margin: 10px;
+            color: gray;
+        }
+
+        div.count-posts-comments span {
+            font-size: 2rem;
+            font-weight: lighter;
+            color: black;
+        }
+
+        #loader-container {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: #aaaaaa75;
+            height: 100px;
+            width: 100px;
+            border-radius: 30px;
+
+            margin: auto auto;
+        }
+    </style>
+</head>
+
+<body data-page="page3">
+    <div class="container">
+        <!-- Navbar -->
+        <div class="header">
+            <div class="logo">
+                <h1 class="logo-title"><a href="./index..html">JelloGram</a></h1>
+                <h3 class="home-anchor"><a href="./index..html">Home</a></h3>
+                <h3 style="cursor: pointer;" class="profile-anchor"><a onclick="getProfile();">Profile</a></h3>
+            </div>
+
+
+
+            <div class="d-flex w-100 justify-content-end p-2">
+                <button onclick="logout();" id="logout-btn" type="button" class="btn btn-outline-danger btn-sm mx-2"
+                    style="display: none;">Logout</button>
+
+                <div class="d-flex" id="account-info" style="display: none;">
+
+                </div>
+            </div>
+
+
+            <div class="login-register">
+                <div id="open-login" class="login-btn" style="display: block;">Login</div>
+                <div id="open-register" class="register-btn" style="display: block;">Register</div>
+            </div>
+        </div>
+        <!--// Navbar //-->
+
+
+        <!-- login popup page -->
+        <div id="login" class="login">
+            <div class="login-content">
+                <span id="close-login" class="close">&times;</span>
+                <div id="login-body"></div> <!-- Content from the external HTML will be loaded here -->
+            </div>
+        </div>
+        <!--// login popup page //-->
+
+        <!-- register popup page -->
+        <div id="register" class="register">
+            <div class="register-content">
+                <span id="close-register" class="close">&times;</span>
+                <div id="register-body"></div> <!-- Content from the external HTML will be loaded here -->
+            </div>
+        </div>
+        <!--// register popup page //-->
+
+
+        <!-- edit post modal -->
+        <div class="modal fade" id="edit-post-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="edit-post-title" class="col-form-label">Title:</label>
+                                <input type="text" class="form-control" id="edit-post-title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-post-body" class="col-form-label">Message:</label>
+                                <textarea class="form-control" id="edit-post-body"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit-post-image" class="col-form-label">Image:</label>
+                                <input type="file" class="form-control" id="edit-post-image">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="edit-post-modal-btn" type="button" class="btn btn-primary">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--// edit post modal //-->
+
+
+        <!-- Delete Post confirmation Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="delete-post-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">confirmation Requirement</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        are sure <strong>Delete</strong> this Post?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="delete-confirmation" type="button" class="btn btn-danger">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--// Delete Post confirmation Modal //-->
+
+
+        <!-- alert -->
+        <div id="success-alert" class="show fade" style="z-index: 5; position:fixed; width: 30%; bottom:0; right:0;">
+        </div>
+        <!--// alert // -->
+
+        <div id="loader-container">
+            <div class="loader"></div>
+        </div>
+
+        <div class="main">
+
+            <div class="profile-card" id="profile-div">
+                <div class="profile-user-img">
+                    <img src="./views/imgs/user3.png" alt="">
+                </div>
+
+                <div class="profile-user-info">
+                    <div>@ouis</div>
+                    <div>أويس الهتار</div>
+                    <div>ouis.alhetar@gmail.com</div>
+                </div>
+
+                <div class="count-posts-comments">
+                    <div>
+                        <span>10</span>.Posts
+                    </div>
+                    <div>
+                        <span>15</span>.Comments
+                    </div>
+                </div>
+            </div>
+
+            <!-- post Title -->
+            <h2 id="profile-user-name"></h2>
+            <!--// post Title //-->
+
+
+
+            <!-- user posts -->
+
+            <div class="posts-container" id="posts-div">
+                <!-- Example posts -->
+                <div id="initial-content" class="post">
+                    <div class="user-info">
+                        <img src="./views/imgs/user3.png" alt="user image">
+                        <div class="name">@ouis</div>
+                    </div>
+                    <div class="post-image">
+                        <img src="./views/imgs/image8.png" alt="post image">
+                    </div>
+                    <div class="post-content">
+                        <span>4 days ago</span>
+                        <h3 class="title">Hello World</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ab a beatae eligendi
+                            quae aperiam, expedita ut perferendis soluta modi pariatur quos quasi tempora harum est
+                            debitis necessitatibus. Repudiandae, officiis!</p>
+                    </div>
+                    <div class="tags">
+                        <span class="material-symbols-outlined">comment</span>(<span>5</span>)Comments:
+                        <div>Economy</div>
+                        <div>Sport</div>
+                    </div>
+                </div>
+                <!-- end post -->
+                <!-- Other posts... -->
+            </div>
+
+
+            <!--// user posts //-->
+
+
+        </div>
+
+        <div class="footer">
+            <div class="container">
+                <p>&copy; 2024 JelloGram. All Rights Reserved.</p>
+                <nav>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="profileScript.js"></script>
+    <!-- <script type="module" src="profileScript.mjs"></script> -->
+</body>
+
+</html>

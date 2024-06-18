@@ -1,0 +1,62 @@
+<!-- register.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+        <style>
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+        
+            .container h2 {
+                color: rgb(85, 26, 139);
+            }
+        
+            #register-form input {
+                width: 100%;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="container">
+        
+        <h2>Register</h2>
+        <form id="register-form">
+            <label for="username">Username:</label><br>
+            <input type="text" id="register-username" name="username"><br>
+
+
+            <label for="password">Password:</label><br>
+            <input type="password" id="register-password" name="password"><br>
+
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="register-email" name="email"><br>
+        
+            
+
+
+            <label for="user-image">Image:</label><br>
+            <input type="file" id="user-image" name="email"><br>
+        
+
+
+            <label for="name">name:</label><br>
+            <input type="text" id="register-name" name="name"><br><br>
+
+
+            <input onclick="register();" type="submit" value="Register" id="register-submit" style="background-color: rgb(85, 26, 139);color: white;padding: 8px 12px;margin: 0 5px;border-radius: 10px;cursor: pointer;transition: .4s ease-in-out transform;outline: none; width: 100%;">
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

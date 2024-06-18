@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Styling Files -->
+    <link rel="stylesheet" href="./views/main.css">
+    <!-- axios importing -->
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <title>JelloGram</title>
+
+        <!-- External font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo+Play:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
+            rel="stylesheet">
+    <!-- Poppins Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- google icons -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Navbar -->
+        <div class="header">
+            <div class="logo">
+                <h1 class="logo-title"><a href="./index..html">JelloGram</a></h1>
+                <h3 class="home-anchor"><a href="./index..html">Home</a></h3>
+                <h3 style="cursor: pointer;" class="profile-anchor"><a onclick="getProfile();">Profile</a></h3>
+            </div>
+
+            
+            
+            <div class="d-flex w-100 justify-content-end p-2">
+                <button onclick="logout();" id="logout-btn" type="button" class="btn btn-outline-danger btn-sm mx-2"
+                    style="display: none;">Logout</button>
+
+                <div class="d-flex" id="account-info" style="display: none;">
+                    
+                </div>
+                    </div>
+
+
+            <div class="login-register">
+                <div id="open-login" class="login-btn" style="display: block;">Login</div>
+                <div id="open-register" class="register-btn" style="display: block;">Register</div>
+            </div>
+        </div>
+        <!--// Navbar //-->
+
+
+        <!-- login popup page -->
+        <div id="login" class="login">
+            <div class="login-content">
+                <span id="close-login" class="close">&times;</span>
+                <div id="login-body"></div> <!-- Content from the external HTML will be loaded here -->
+            </div>
+        </div>
+        <!--// login popup page //-->
+
+        <!-- register popup page -->
+        <div id="register" class="register">
+            <div class="register-content">
+                <span id="close-register" class="close">&times;</span>
+                <div id="register-body"></div> <!-- Content from the external HTML will be loaded here -->
+            </div>
+        </div>
+        <!--// register popup page //-->
+
+
+        <!-- Create A new post popup page -->
+        <div id="create-post" class="create-post">
+            <div class="create-post-content">
+                <span id="close-create-post" class="close">&times;</span>
+                <div id="create-post-body"></div> <!-- Content from the external HTML will be loaded here -->
+            </div>
+        </div>
+        <!--// Create A new post popup page //-->
+
+
+        <!-- edit post popup page -->
+        <!-- <div id="edit-post" class="edit-post">
+            <div class="edit-post-content">
+                <span id="close-edit-post" class="close">&times;</span>
+                <div id="edit-post-body"></div> 
+            </div>
+        </div> -->
+        <!--// Create A new post popup page // -->
+
+
+
+        <!-- edit post modal -->
+
+
+        <div class="modal fade" id="edit-post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="edit-post-title" class="col-form-label">Title:</label>
+                                <input type="text" class="form-control" id="edit-post-title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-post-body" class="col-form-label">Message:</label>
+                                <textarea class="form-control" id="edit-post-body"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit-post-image" class="col-form-label">Image:</label>
+                                <input type="file" class="form-control" id="edit-post-image">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="edit-post-modal-btn" type="button" class="btn btn-primary">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--// edit post modal //-->
+
+
+        <!-- Delete Post confirmation Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="delete-post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">confirmation Requirement</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        are sure <strong>Delete</strong>  this Post?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="delete-confirmation" type="button" class="btn btn-danger">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--// Delete Post confirmation Modal //-->
+
+
+        <!-- alert -->
+        <div id="success-alert" class="show fade" style="z-index: 5; position:fixed; width: 30%; bottom:0; right:0;">
+        </div>
+        <!--// alert // -->
+
+        <!-- plus Sign (+) to add post -->
+         <div id="add-post" style="z-index: 5; position:fixed; bottom:5%; right:10%; display: none;">
+            <span class="material-symbols-outlined">
+            <abbr title="إضافة منشور">add</abbr>
+            </span>
+         </div>
+        <!--// plus Sign (+) to add post //-->
+
+
+        <div id="loader-container">
+            <div class="loader"></div>
+        </div>
+
+        <div class="main">
+            <div class="posts-container" id="posts-container">
+                <!-- Example posts -->
+                <div id="initial-content" class="post" style="display: none;">
+                    <div class="user-info">
+                        <img src="./views/imgs/user3.png" alt="user image">
+                        <div class="name">@ouis</div>
+                    </div>
+                    <div class="post-image">
+                        <img src="./views/imgs/image8.png" alt="post image">
+                    </div>
+                    <div class="post-content">
+                        <span>4 days ago</span>
+                        <h3 class="title">Hello World</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ab a beatae eligendi
+                            quae aperiam, expedita ut perferendis soluta modi pariatur quos quasi tempora harum est
+                            debitis necessitatibus. Repudiandae, officiis!</p>
+                    </div>
+                    <div class="tags">
+                        <span class="material-symbols-outlined">comment</span>(<span>5</span>)Comments:
+                        <div>Economy</div>
+                        <div>Sport</div>
+                    </div>
+                </div>
+                <!-- end post -->
+                <!-- Other posts... -->
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="container">
+                <p>&copy; 2024 JelloGram. All Rights Reserved.</p>
+                <nav>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
+
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./views/main.css">
+  <script src="../node_modules/axios/dist/axios.min.js"></script>
+  <title>JelloGram</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap" />
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <h1 class="logo-title">JelloGram</h1>
+      </div>
+      <div class="buttons">
+        <button id="open-login">Login</button>
+        <button id="open-register">Register</button>
+        <button id="logout-btn" style="display: none;" onclick="logout()">Logout</button>
+      </div>
+    </div>
+    <div id="success-alert"></div>
+    <div id="posts-container"></div>
+  </div>
+
+   //Modals
+  <div id="login" class="modal">
+    <div class="modal-content">
+      <span id="close-login" class="close">&times;</span>
+      <div id="login-body"></div>
+    </div>
+  </div>
+
+  <div id="register" class="modal">
+    <div class="modal-content">
+      <span id="close-register" class="close">&times;</span>
+      <div id="register-body"></div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+
+</html>
+
+
+-->

@@ -1,0 +1,61 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .container h2 {
+            color: rgb(85, 26, 139);
+        }
+
+
+        .form {
+            max-width: 75%;
+            margin: 0 auto;
+        }
+
+        .form input {
+            margin-bottom: 20px;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .form input:focus {
+            border-bottom: 1.5px solid rgb(85, 26, 139);
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form class="form" style="padding-bottom:30px ;" id="login-form">
+            <label for="username-external">Username:</label><br>
+            <input type="text" id="username-external" name="username" value="ouais.abdullah.ye"><br>
+
+
+            <label for="password-external">Password:</label><br>
+            <input type="password" id="password-external" name="password" value="ouais.abdullah"><br><br>
+
+            
+            <input type="submit" value="Login" id="login-btn-external" onclick="login();"
+                style="background-color: rgb(85, 26, 139);color: white;padding: 8px 12px;margin: 0 5px;border-radius: 10px;cursor: pointer;transition: .4s ease-in-out transform;outline: none;">
+        </form>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

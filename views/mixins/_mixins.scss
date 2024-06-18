@@ -1,0 +1,13 @@
+
+
+@mixin restList {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+@mixin circle($size){
+    height: $size;
+    width: $size;
+    border-radius: 50%;
+}

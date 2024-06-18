@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit post</title>
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+
+        }
+
+        .container h2 {
+            color: rgb(85, 26, 139);
+            text-align: center;
+        }
+
+        form input,
+        textarea {
+            width: 100%;
+        }
+
+        form textarea {
+            resize: none;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="title">edit post</h2>
+        <form id="edit-post-form">
+            <label for="edit-post-title">Title:</label><br>
+            <input type="text" id="edit-post-title" name="title"><br>
+
+
+            <label for="edit-post-body">body:</label><br>
+            <textarea name="body" id="edit-post-body"></textarea><br>
+
+
+            <label for="edit-post-image">Image:</label><br>
+            <input type="file" id="edit-post-image" name="image"><br><br>
+
+
+            <input type="submit" value="Create" id="edite-post-btn"
+                style="background-color: rgb(85, 26, 139);color: white;padding: 8px 12px;margin: 0 5px;border-radius: 10px;cursor: pointer;transition: .4s ease-in-out transform;outline: none;"><br>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
